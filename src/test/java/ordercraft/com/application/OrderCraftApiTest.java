@@ -1,13 +1,12 @@
-package ordercraft.com;
+package ordercraft.com.application;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OrderCraftApiApplicationTests {
+public class OrderCraftApiTest {
 
     @Test
     void contextLoads() {
     }
-
 }

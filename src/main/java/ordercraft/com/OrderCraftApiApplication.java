@@ -8,6 +8,7 @@ public class OrderCraftApiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(OrderCraftApiApplication.class, args);
+
     }
 
 }
