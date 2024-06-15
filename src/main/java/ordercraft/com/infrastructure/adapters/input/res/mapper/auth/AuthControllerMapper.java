@@ -5,8 +5,10 @@ import ordercraft.com.infrastructure.adapters.input.res.model.request.auth.Login
 import ordercraft.com.infrastructure.adapters.input.res.model.request.auth.RegisterRequest;
 import ordercraft.com.infrastructure.adapters.input.res.model.request.auth.UpdateRequest;
 import ordercraft.com.infrastructure.adapters.input.res.model.response.AuthResponse;
+import ordercraft.com.infrastructure.adapters.input.res.model.response.UserResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+
 
 @Mapper(
         componentModel = "spring",
@@ -18,4 +20,5 @@ public interface AuthControllerMapper {
     OrderCraftUser toOrderCraftUser(LoginRequest loginRequest);
     OrderCraftUser toOrderCraftUser(UpdateRequest updateRequest);
     AuthResponse toAuthResponse(OrderCraftUser orderCraftUser);
+    UserResponse toUserResponse(OrderCraftUser orderCraftUser);
 }

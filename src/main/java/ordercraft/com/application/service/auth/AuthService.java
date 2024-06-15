@@ -10,6 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Service
@@ -78,5 +80,11 @@ public class AuthService implements AuthServicePort {
         }
 
         authPersistencePort.deleteUserByID(idUser);
+    }
+
+    @Override
+    public OrderCraftUser getUserById(Long idUser) {
+        return authPersistencePort
+                .findById(idUser).orElseThrow(OrderCraftUserNotFoundException::new);
     }
 }

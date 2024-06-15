@@ -20,7 +20,7 @@ import java.util.function.Function;
 @Service
 public class JwtService implements JwtServicePort {
 
-    private static final String SECRET_KEY = "9h4K2PqK2l7R3sE8W1gT5bR7nC8fU1wD0aS6jA3vG5mZ4cH9xY2nM8vE4rT5yB";
+    private static final String SECRET_KEY = "9h4K2PqK2l7R3sE8W1gT5bR7nC8fU1wD0aS6jA3vG5mZ4cH9xY2nM8vE4rT5y8";
 
     @Override
     public String getToken(UserDetails userDetails) {

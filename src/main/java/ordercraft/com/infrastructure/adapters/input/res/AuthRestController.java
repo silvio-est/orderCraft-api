@@ -2,15 +2,16 @@ package ordercraft.com.infrastructure.adapters.input.res;
 
 import lombok.RequiredArgsConstructor;
 import ordercraft.com.application.ports.input.auth.AuthServicePort;
-import ordercraft.com.domain.exception.OrderCraftUserNotFoundException;
 import ordercraft.com.infrastructure.adapters.input.res.mapper.auth.AuthControllerMapper;
 import ordercraft.com.infrastructure.adapters.input.res.model.request.auth.LoginRequest;
 import ordercraft.com.infrastructure.adapters.input.res.model.request.auth.RegisterRequest;
 import ordercraft.com.infrastructure.adapters.input.res.model.request.auth.UpdateRequest;
 import ordercraft.com.infrastructure.adapters.input.res.model.response.AuthResponse;
+import ordercraft.com.infrastructure.adapters.input.res.model.response.UserResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -37,16 +38,23 @@ public class AuthRestController {
     }
 
     @PutMapping("/update/{idUser}")
-    ResponseEntity<HttpStatus> updateUser(@PathVariable Long idUser, @RequestBody UpdateRequest updateRequest) throws OrderCraftUserNotFoundException {
+    ResponseEntity<HttpStatus> updateUser(@PathVariable Long idUser, @RequestBody UpdateRequest updateRequest) {
         authService.updateUser(authMapper.toOrderCraftUser(updateRequest), idUser);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 
     }
+
     @DeleteMapping("/delete/{idUser}")
     ResponseEntity<HttpStatus> deleteUser(@PathVariable Long idUser)  {
         authService.deleteUser(idUser);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping("/user/{idUser}")
+    ResponseEntity<UserResponse> getUser(@PathVariable Long idUser){
+        return ResponseEntity.ok(authMapper.toUserResponse(authService.getUserById(idUser)));
+    }
+
 }

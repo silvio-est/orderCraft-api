@@ -7,4 +7,5 @@ public interface AuthServicePort {
     public OrderCraftUser register(OrderCraftUser orderCraftUser);
     public void updateUser(OrderCraftUser orderCraftUser, Long idUser);
     public void deleteUser(Long idUser);
+    public OrderCraftUser getUserById(Long idUser);
 }

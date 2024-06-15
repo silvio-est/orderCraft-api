@@ -29,6 +29,7 @@ public class WebSecurityConfiguration {
                                 .requestMatchers("/auth/login").permitAll()
                                 .requestMatchers("/api/auth/update/**").hasAnyAuthority("ADMIN")
                                 .requestMatchers("/api/auth/delete/**").hasAnyAuthority("ADMIN")
+                                .requestMatchers("api/auth/user/**").hasAnyAuthority("ADMIN")
                                 .anyRequest().authenticated()
                 ).sessionManagement(sessionManager ->
                         sessionManager
