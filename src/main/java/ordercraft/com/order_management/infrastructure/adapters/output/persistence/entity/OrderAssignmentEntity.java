@@ -9,8 +9,11 @@ import lombok.Setter;
 @Entity
 @Table(name = "order_assignment", schema = "public")
 public class OrderAssignmentEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer orderAssignmentId;
+
     @Column(name = "order_id")
     private Integer orderId;
 

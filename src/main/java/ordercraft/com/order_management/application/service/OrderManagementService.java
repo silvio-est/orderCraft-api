@@ -1,12 +1,15 @@
 package ordercraft.com.order_management.application.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ordercraft.com.order_management.application.ports.input.OrderManagementServicePort;
 import ordercraft.com.order_management.application.ports.output.*;
+import ordercraft.com.order_management.domain.exception.ChefNotFoundException;
 import ordercraft.com.order_management.domain.exception.DishNotFoundException;
 import ordercraft.com.order_management.domain.exception.WaitressNotFoundException;
 import ordercraft.com.order_management.domain.model.*;
+import ordercraft.com.order_management.infrastructure.adapters.input.rest.model.CheckOrderRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,12 +22,30 @@ public class OrderManagementService implements OrderManagementServicePort {
     private final OrderDishPersistencePort orderDishPersistencePort;
     private final WaitressPersistencePort waitressPersistencePort;
     private final OrderAssignmentPersistencePort orderAssignmentPersistencePort;
+    private final ChefPersistencePort chefPersistencePort;
 
 
     @Override
-    public void saveOrder(Order order) {
+    public void orderComplete(CheckOrderRequest checkOrderRequest) {
 
-        //  Save the order in the database and get the saved instance
+//        Find chef in the database
+
+        Chef findChef = chefPersistencePort.findByUsername(checkOrderRequest.chefUser())
+                .orElseThrow(()-> new ChefNotFoundException("Chef not found in the database " + checkOrderRequest.chefUser()));
+
+//        Set chef in the orderAssignmentPersistence table
+
+        orderAssignmentPersistencePort.updateChefUserByOrderId(checkOrderRequest.orderId(), findChef.getChefId());
+
+
+
+    }
+
+    @Override
+    @Transactional
+    public Order saveOrder(Order order) {
+
+//         Save the order in the database and get the saved instance
 
         Order saveOrder = orderPersistencePort.save(
                 Order.builder()
@@ -33,7 +54,7 @@ public class OrderManagementService implements OrderManagementServicePort {
         );
 
 
-        // For each dish in the order, find the corresponding dish in the database and save the relationship
+//         For each dish in the order, find the corresponding dish in the database and save the relationship
 
         order.getDishes().forEach(dish -> {
             Dish dishFind = dishPersistencePort.findByName(dish.getName())
@@ -49,25 +70,23 @@ public class OrderManagementService implements OrderManagementServicePort {
             );
         });
 
-        // Find the waitress in the database
+//         Find the waitress in the database
 
         Waitress findWaitress =  waitressPersistencePort.findByUsername(order.getUsername())
                 .orElseThrow(() -> new WaitressNotFoundException("Waitress not found in the database" + order.getUsername()));
 
 
 
-        // Save order assignment of the order in the database
+//         Save order assignment of the order in the database
 
         orderAssignmentPersistencePort.save(
                 OrderAssignment.builder()
-                        .orderID(saveOrder.getOrderId())
+                        .orderId(saveOrder.getOrderId())
                         .waitressId(findWaitress.getWaitressId())
                         .build()
         );
 
-
-
-
+        return saveOrder;
 
     }
 }

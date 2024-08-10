@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface WaitressPersistencePort {
     Optional<Waitress> findByUsername(String username);
+    Optional<Waitress> findById(Integer waitressId);
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class OrderAssignment {
-    private Integer orderID;
+    private Integer orderId;
     private Integer waitressId;
     private Integer chefId;
 }

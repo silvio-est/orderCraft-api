@@ -21,4 +21,10 @@ public class WaitressPersistenceAdapter implements WaitressPersistencePort {
         return repository.findByUsername(username)
                 .map(mapper::toWaitress);
     }
+
+    @Override
+    public Optional<Waitress> findById(Integer waitressId) {
+//        return mapper.toWaitress(repository.findById((Long) waitressId));
+        return null;
+    }
 }
