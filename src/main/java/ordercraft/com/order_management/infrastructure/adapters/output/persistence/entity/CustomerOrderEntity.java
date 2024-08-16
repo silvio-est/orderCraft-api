@@ -22,5 +22,8 @@ public class CustomerOrderEntity {
     @Column(name = "table_id", nullable = false)
     private Integer tableId;
 
+    @Column(name = "state", nullable = false)
+    private String state;
+
 
 }

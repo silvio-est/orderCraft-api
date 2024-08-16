@@ -6,17 +6,14 @@ import ordercraft.com.order_management.application.ports.input.OrderManagementSe
 import ordercraft.com.order_management.domain.model.Order;
 import ordercraft.com.order_management.infrastructure.adapters.input.rest.mapper.OrderManagementControllerMapper;
 import ordercraft.com.order_management.infrastructure.adapters.input.rest.model.CheckOrderRequest;
+import ordercraft.com.order_management.infrastructure.adapters.input.rest.model.OrderCancelRequest;
 import ordercraft.com.order_management.infrastructure.adapters.input.rest.model.OrderRequest;
 import ordercraft.com.order_management.infrastructure.adapters.input.rest.model.OrderResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -31,7 +28,7 @@ public class OrderManagementController {
 
         Order order = servicePort.saveOrder(mapper.toOrder(orderRequest));
 
-        return new OrderResponse(order.getOrderId(), orderRequest.getUsername(),
+        return new OrderResponse(order.getOrderId(), orderRequest.getWaitressUsername(),
                 orderRequest.getTableId(), orderRequest.getDishes());
     }
 
@@ -39,11 +36,25 @@ public class OrderManagementController {
     @PostMapping("/checkOrder")
     ResponseEntity<HttpStatus> checkOrder(@RequestBody CheckOrderRequest checkOrderRequest){
 
-        servicePort.orderComplete(checkOrderRequest);
+        servicePort.orderComplete(mapper.toOrder(checkOrderRequest));
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @DeleteMapping("/cancelOrder/{tableId}")
+    public ResponseEntity<HttpStatus> cancelOrder(@PathVariable Long tableId, @RequestBody OrderCancelRequest orderCancelRequest){
+
+        servicePort.cancelOrder(
+                tableId, mapper.toOrderCancel(orderCancelRequest));
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+
+
+    }
+
+
 
 
 

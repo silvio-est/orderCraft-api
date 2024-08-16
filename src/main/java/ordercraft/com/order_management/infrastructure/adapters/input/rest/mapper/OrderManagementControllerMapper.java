@@ -1,6 +1,9 @@
 package ordercraft.com.order_management.infrastructure.adapters.input.rest.mapper;
 
 import ordercraft.com.order_management.domain.model.Order;
+import ordercraft.com.order_management.domain.model.OrderCancel;
+import ordercraft.com.order_management.infrastructure.adapters.input.rest.model.CheckOrderRequest;
+import ordercraft.com.order_management.infrastructure.adapters.input.rest.model.OrderCancelRequest;
 import ordercraft.com.order_management.infrastructure.adapters.input.rest.model.OrderRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -12,5 +15,6 @@ import org.mapstruct.ReportingPolicy;
 
 public interface OrderManagementControllerMapper {
     Order toOrder(OrderRequest request);
-    OrderRequest toOrderRequest(Order model);
+    Order toOrder(CheckOrderRequest request);
+    OrderCancel toOrderCancel(OrderCancelRequest request);
 }

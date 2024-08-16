@@ -7,9 +7,9 @@ import ordercraft.com.order_management.application.ports.input.OrderManagementSe
 import ordercraft.com.order_management.application.ports.output.*;
 import ordercraft.com.order_management.domain.exception.ChefNotFoundException;
 import ordercraft.com.order_management.domain.exception.DishNotFoundException;
+import ordercraft.com.order_management.domain.exception.OrderNotFoundException;
 import ordercraft.com.order_management.domain.exception.WaitressNotFoundException;
 import ordercraft.com.order_management.domain.model.*;
-import ordercraft.com.order_management.infrastructure.adapters.input.rest.model.CheckOrderRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,21 +23,51 @@ public class OrderManagementService implements OrderManagementServicePort {
     private final WaitressPersistencePort waitressPersistencePort;
     private final OrderAssignmentPersistencePort orderAssignmentPersistencePort;
     private final ChefPersistencePort chefPersistencePort;
+    private final OrderCancelPersistencePort orderCancelPersistencePort;
 
 
     @Override
-    public void orderComplete(CheckOrderRequest checkOrderRequest) {
+    public void orderComplete(Order order) {
 
 //        Find chef in the database
 
-        Chef findChef = chefPersistencePort.findByUsername(checkOrderRequest.chefUser())
-                .orElseThrow(()-> new ChefNotFoundException("Chef not found in the database " + checkOrderRequest.chefUser()));
+        Chef findChef = chefPersistencePort.findByUsername(order.getChefUsername())
+                .orElseThrow(()-> new ChefNotFoundException("Chef not found in the database " + order.getChefUsername()));
 
 //        Set chef in the orderAssignmentPersistence table
 
-        orderAssignmentPersistencePort.updateChefUserByOrderId(checkOrderRequest.orderId(), findChef.getChefId());
+        orderAssignmentPersistencePort.updateChefUserByOrderId(order.getOrderId(), findChef.getChefId());
+
+        Order findOrder = orderPersistencePort.findOrderById(order.getOrderId().longValue())
+                .orElseThrow(()-> new OrderNotFoundException("Order not found in the database "
+                        + order.getOrderId()));
+
+        findOrder.setState(String.valueOf(State.COMPLETE));
+
+        orderPersistencePort.save(findOrder);
 
 
+
+    }
+
+    @Override
+    public void cancelOrder(Long tableId,  OrderCancel orderCancel) {
+
+//        Search the last order
+
+        Order order = orderPersistencePort.searchLastOrder(tableId)
+                .orElseThrow(()-> new OrderNotFoundException("Order not found in the database with id  " + tableId));
+
+        order.setState(String.valueOf(State.CANCEL));
+
+        orderPersistencePort.save(order);
+
+        orderCancelPersistencePort.save(
+                OrderCancel.builder()
+                        .orderId(order.getOrderId())
+                        .message(orderCancel.getMessage())
+                        .build()
+        );
 
     }
 
@@ -50,6 +80,7 @@ public class OrderManagementService implements OrderManagementServicePort {
         Order saveOrder = orderPersistencePort.save(
                 Order.builder()
                         .tableId(order.getTableId())
+                        .state(order.getState())
                         .build()
         );
 
@@ -72,8 +103,8 @@ public class OrderManagementService implements OrderManagementServicePort {
 
 //         Find the waitress in the database
 
-        Waitress findWaitress =  waitressPersistencePort.findByUsername(order.getUsername())
-                .orElseThrow(() -> new WaitressNotFoundException("Waitress not found in the database" + order.getUsername()));
+        Waitress findWaitress =  waitressPersistencePort.findByUsername(order.getWaitressUsername())
+                .orElseThrow(() -> new WaitressNotFoundException("Waitress not found in the database" + order.getChefUsername()));
 
 
 

@@ -30,6 +30,7 @@ public class WebSecurityConfiguration {
                                 .requestMatchers("/api/auth/update/**").hasAnyAuthority("ADMIN")
                                 .requestMatchers("/api/auth/delete/**").hasAnyAuthority("ADMIN")
                                 .requestMatchers("api/auth/user/**").hasAnyAuthority("ADMIN")
+                                .requestMatchers("api/cancelOrder/").hasAnyAuthority("WAITRESS")
                                 .anyRequest().permitAll()
                 ).sessionManagement(sessionManager ->
                         sessionManager

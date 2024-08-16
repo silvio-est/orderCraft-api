@@ -4,17 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderRequest {
-    private String waitressUsername;
-    private Integer tableId;
-    private String state;
-    private List<DishRequest> dishes;
+
+public class OrderCancelRequest {
+
+    private String message;
 }
-
-

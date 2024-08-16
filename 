@@ -1,0 +1,47 @@
+[33mcommit 45555a574ec04cd92379594fcc9ec764ac6531c3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdeveloper-silvio[m[33m, [m[1;31morigin/developer-silvio[m[33m)[m
+Author: Silvio Estevan Montalvo <msilvioesteban@gmail.com>
+Date:   Sat Aug 10 17:42:43 2024 -0400
+
+    feat(orders): implemented chef order tracking
+
+[33mcommit 4d895a76eb316574255474aaaadd6c1825b63af7[m
+Author: Silvio Estevan Montalvo <msilvioesteban@gmail.com>
+Date:   Tue Jul 2 21:16:23 2024 -0400
+
+    feat(orders, users): implement order creation functionality and update user management behaviors
+
+[33mcommit 38d72e02f9c95ddfac6d8cf2fceec34989f45549[m
+Author: Silvio Estevan Montalvo <msilvioesteban@gmail.com>
+Date:   Sat Jun 15 19:02:50 2024 -0400
+
+    feat(users) add user management functionality in backend
+
+[33mcommit 16e240ce8548b8783e01ffb2422ce236249b5174[m
+Author: Silvio Estevan Montalvo <msilvioesteban@gmail.com>
+Date:   Sat Jun 8 18:59:14 2024 -0400
+
+    feat(users): implement user management functionality in backend
+
+[33mcommit 56140a05463d80a1646876009790ab68c22323aa[m
+Author: Silvio Estevan Montalvo <msilvioesteban@gmail.com>
+Date:   Sun May 26 19:46:20 2024 -0400
+
+    OrderCraft_DB integration
+
+[33mcommit cd0c84d2a42019cc463f0e5f42e9256de1cdfd20[m[33m ([m[1;31morigin/testing[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mtesting[m[33m, [m[1;32mmain[m[33m, [m[1;32mdevelop[m[33m)[m
+Author: Silvio Estevan Montalvo <msilvioesteban@gmail.com>
+Date:   Sun May 26 18:47:15 2024 -0400
+
+    Add new configuration settings(dev,prod)
+
+[33mcommit 1cd4ee63526753698c60f2c2f6c11ece4078a70c[m
+Author: Silvio Estevan Montalvo <msilvioesteban@gmail.com>
+Date:   Sat May 25 23:47:28 2024 -0400
+
+    Initial commit
+
+[33mcommit b2bd59510819c12026d981750bfe44efe76b5a1c[m
+Author: silvio-est <133680127+silvio-est@users.noreply.github.com>
+Date:   Sat May 25 22:05:29 2024 -0400
+
+    Initial commit

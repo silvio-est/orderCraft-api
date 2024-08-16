@@ -5,18 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
-
+@Builder
+public class OrderCancel {
+    private Integer cancelOrderId;
     private Integer orderId;
-    private Integer tableId;
-    private String chefUsername;
-    private String waitressUsername;
-    private String state;
-    private List<Dish> dishes;
+    private String message;
 }
