@@ -2,7 +2,6 @@ package ordercraft.com.order_management.application.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import ordercraft.com.order_management.application.ports.input.OrderManagementServicePort;
 import ordercraft.com.order_management.application.ports.output.*;
 import ordercraft.com.order_management.domain.exception.ChefNotFoundException;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class OrderManagementService implements OrderManagementServicePort {
 
     private final OrderPersistencePort orderPersistencePort;

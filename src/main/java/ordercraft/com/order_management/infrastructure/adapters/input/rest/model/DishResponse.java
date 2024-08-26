@@ -1,20 +1,17 @@
-package ordercraft.com.order_management.domain.model;
+package ordercraft.com.order_management.infrastructure.adapters.input.rest.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dish {
+@Builder
+public class DishResponse {
     private Integer dishId;
     private String name;
-    private BigDecimal price;
-    private Integer amount;
+    private Double price;
     private Boolean available;
 }
